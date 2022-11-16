@@ -188,8 +188,8 @@ COMMENT ON TABLE hr.historico_cargos IS 'A tabela historico_cargos guarda as inf
 COMMENT ON COLUMN hr.historico_cargos.id_empregado IS 'Chave primária de tabela.';
 COMMENT ON COLUMN hr.historico_cargos.data_inicial IS 'Data inicial do funcionario no cargo atual.';
 COMMENT ON COLUMN hr.historico_cargos.data_final IS 'Data de finalização do funcionario no cargo.';
-COMMENT ON COLUMN hr.historico_cargos.id_cargo IS 'Chave primária de tabela historico_cargos.';
-COMMENT ON COLUMN hr.historico_cargos.id_departamento IS 'Chave primária de tabela historico_cargos.';
+COMMENT ON COLUMN hr.historico_cargos.id_cargo IS 'Chave primária de tabela.';
+COMMENT ON COLUMN hr.historico_cargos.id_departamento IS 'Chave primária de tabela.';
 
 /*Os atributos de chave estrangeira e se relacionando com as tabelas*/
 
