@@ -12,8 +12,7 @@ celin
 /*selecionando o banco de dados para utilizar para criar as tabelas*/
 USE uvv;
 
-/* criando as tabelas e relações*/
-
+/* criando a tabela cargos*/
 CREATE TABLE cargos (
                 id_cargo VARCHAR(10) NOT NULL,
                 cargo VARCHAR(35) NOT NULL,
@@ -22,14 +21,11 @@ CREATE TABLE cargos (
                 PRIMARY KEY (id_cargo)
 );
 
+/*comentarios da tabela cargos*/
 ALTER TABLE cargos COMMENT 'A Tabela cargos ela armazena os cargos existentes e a faixa salarial para cada cargo.';
-
 ALTER TABLE cargos MODIFY COLUMN id_cargo VARCHAR(10) COMMENT 'Chave primária de tabela cargos.';
-
 ALTER TABLE cargos MODIFY COLUMN cargo VARCHAR(35) COMMENT 'Nome do cargo.';
-
 ALTER TABLE cargos MODIFY COLUMN salario_minimo DECIMAL(8, 2) COMMENT 'O sálario minimo admitido para um cargo.';
-
 ALTER TABLE cargos MODIFY COLUMN salario_maximo DECIMAL(8, 2) COMMENT 'O sálario maximo admitido para um cargo.';
 
 
@@ -37,16 +33,16 @@ CREATE UNIQUE INDEX cargos_idx
  ON cargos
  ( cargo );
 
+/*criando a tabela regioes*/
 CREATE TABLE regioes (
                 id_regiao INT NOT NULL,
                 nome VARCHAR(25) NOT NULL,
                 PRIMARY KEY (id_regiao)
 );
 
+/*comentarios da tabela regioes*/
 ALTER TABLE regioes COMMENT 'Tabela regiões conta com os números e nomes das regiões.';
-
 ALTER TABLE regioes MODIFY COLUMN id_regiao INTEGER COMMENT 'Chave primária de tabela regiões.';
-
 ALTER TABLE regioes MODIFY COLUMN nome VARCHAR(25) COMMENT 'Nome das regiões.';
 
 
@@ -54,6 +50,7 @@ CREATE UNIQUE INDEX regioes_idx
  ON regioes
  ( nome );
 
+/*criando tabela paises*/
 CREATE TABLE paises (
                 id_pais CHAR(2) NOT NULL,
                 nome VARCHAR(50) NOT NULL,
@@ -61,12 +58,10 @@ CREATE TABLE paises (
                 PRIMARY KEY (id_pais)
 );
 
+/*comentarios de tabela paises*/
 ALTER TABLE paises COMMENT 'Tabela países com as informaçõs de cada país.';
-
 ALTER TABLE paises MODIFY COLUMN id_pais CHAR(2) COMMENT 'Chave primária de tabela países.';
-
 ALTER TABLE paises MODIFY COLUMN nome VARCHAR(50) COMMENT 'Nome do país.';
-
 ALTER TABLE paises MODIFY COLUMN id_regiao INTEGER COMMENT 'Uma chave estrangeira na tabela de regiões.';
 
 
@@ -74,6 +69,7 @@ CREATE UNIQUE INDEX paises_idx
  ON paises
  ( nome );
 
+/*criando tabela localizacoes*/
 CREATE TABLE localizacoes (
                 id_localizacao INT NOT NULL,
                 endereco VARCHAR(50),
@@ -84,22 +80,16 @@ CREATE TABLE localizacoes (
                 PRIMARY KEY (id_localizacao)
 );
 
-ALTER TABLE localizacoes COMMENT 'A tabela localizacoes conta com os endereços de varios escritórios e facilidades
-da empresa.';
-
+/*comentarios de tabela localizacoes*/
+ALTER TABLE localizacoes COMMENT 'A tabela localizacoes conta com os endereços de varios escritórios e facilidades da empresa.';
 ALTER TABLE localizacoes MODIFY COLUMN id_localizacao INTEGER COMMENT 'Chave primária de tabela localizacoes.';
-
 ALTER TABLE localizacoes MODIFY COLUMN endereco VARCHAR(50) COMMENT 'O Endereço do escritório ou facilidade da empresa.';
-
 ALTER TABLE localizacoes MODIFY COLUMN cep VARCHAR(12) COMMENT 'CEP da empresa';
-
 ALTER TABLE localizacoes MODIFY COLUMN cidade VARCHAR(50) COMMENT 'Cidade da empresa.';
-
 ALTER TABLE localizacoes MODIFY COLUMN uf VARCHAR(25) COMMENT 'Estado da empresa.';
-
 ALTER TABLE localizacoes MODIFY COLUMN id_pais CHAR(2) COMMENT 'A chave estrangeira na tabela de países.';
 
-
+/*criando tabela departamentos*/
 CREATE TABLE departamentos (
                 id_departamento INT NOT NULL,
                 nome VARCHAR(50),
@@ -107,12 +97,10 @@ CREATE TABLE departamentos (
                 PRIMARY KEY (id_departamento)
 );
 
+/*comentarios da tabela departamentos*/
 ALTER TABLE departamentos COMMENT 'A Tabela departamentos informe sobre o departamentos da empresa.';
-
 ALTER TABLE departamentos MODIFY COLUMN id_departamento INTEGER COMMENT 'Chave primária de tabela departamentos.';
-
 ALTER TABLE departamentos MODIFY COLUMN nome VARCHAR(50) COMMENT 'Nome do departamento da tabela.';
-
 ALTER TABLE departamentos MODIFY COLUMN id_localizacao INTEGER COMMENT 'A chave estrangeira na tabela de departamentos.';
 
 
@@ -120,6 +108,7 @@ CREATE UNIQUE INDEX departamentos_idx
  ON departamentos
  ( nome );
 
+/*criando tabela empregados*/
 CREATE TABLE empregados (
                 id_empregado INT NOT NULL,
                 nome VARCHAR(75) NOT NULL,
@@ -134,26 +123,17 @@ CREATE TABLE empregados (
                 PRIMARY KEY (id_empregado)
 );
 
+/*comentarios da tabela empregados*/
 ALTER TABLE empregados COMMENT 'A tabela empregados que conta com as informações da tabela empregados.';
-
 ALTER TABLE empregados MODIFY COLUMN id_empregado INTEGER COMMENT 'Chave primária de tabela empregados.';
-
 ALTER TABLE empregados MODIFY COLUMN nome VARCHAR(75) COMMENT 'Nome completo do funcionario.';
-
 ALTER TABLE empregados MODIFY COLUMN email VARCHAR(35) COMMENT 'insere o email do funcionario.';
-
 ALTER TABLE empregados MODIFY COLUMN telefone VARCHAR(20) COMMENT 'telefone do funcionario';
-
 ALTER TABLE empregados MODIFY COLUMN data_contratacao DATE COMMENT 'A Data que o funcionario iniciou no cargo.';
-
 ALTER TABLE empregados MODIFY COLUMN id_cargo VARCHAR(10) COMMENT 'A chave estrangeira do funcionario.';
-
 ALTER TABLE empregados MODIFY COLUMN salario DECIMAL(8, 2) COMMENT 'O salário mensal atual do empregado.';
-
 ALTER TABLE empregados MODIFY COLUMN comissao DECIMAL(4, 2) COMMENT 'A porcentagem de comissão do funcionario.';
-
 ALTER TABLE empregados MODIFY COLUMN id_supervisor INTEGER COMMENT 'Chave primária de tabela.';
-
 ALTER TABLE empregados MODIFY COLUMN id_departamento INTEGER COMMENT 'O departamento atual do funcionario';
 
 
@@ -161,19 +141,19 @@ CREATE UNIQUE INDEX empregados_idx
  ON empregados
  ( email );
 
+/*criando tabela gerentes*/
 CREATE TABLE gerentes (
                 id_gerente INT NOT NULL,
                 id_departamento INT NOT NULL,
                 PRIMARY KEY (id_gerente, id_departamento)
 );
 
+/*comentarios da tabela gerentes*/
 ALTER TABLE gerentes COMMENT 'Tabela gerentes conta a chaves primárias e informações referindo gerentes.';
-
 ALTER TABLE gerentes MODIFY COLUMN id_gerente INTEGER COMMENT 'Chave primária de tabela gerentes.';
-
 ALTER TABLE gerentes MODIFY COLUMN id_departamento INTEGER COMMENT 'Chave primária de tabela gerentes.';
 
-
+/*criando tabela historico_cargos*/
 CREATE TABLE historico_cargos (
                 id_empregado INT NOT NULL,
                 data_inicial DATE NOT NULL,
@@ -182,17 +162,12 @@ CREATE TABLE historico_cargos (
                 id_departamento INT NOT NULL,
                 PRIMARY KEY (id_empregado, data_inicial)
 );
-
+/*comentarios da tabela historico_cargos*/
 ALTER TABLE historico_cargos COMMENT 'A tabela historico_cargos guarda as informações de cargos de cada funcionario.';
-
 ALTER TABLE historico_cargos MODIFY COLUMN id_empregado INTEGER COMMENT 'Chave primária de tabela.';
-
 ALTER TABLE historico_cargos MODIFY COLUMN data_inicial DATE COMMENT 'Data inicial do funcionario no cargo atual.';
-
 ALTER TABLE historico_cargos MODIFY COLUMN data_final DATE COMMENT 'Data de finalização do funcionario no cargo.';
-
 ALTER TABLE historico_cargos MODIFY COLUMN id_cargo VARCHAR(10) COMMENT 'Chave primária de tabela.';
-
 ALTER TABLE historico_cargos MODIFY COLUMN id_departamento INTEGER COMMENT 'Chave primária de tabela.';
 
 
