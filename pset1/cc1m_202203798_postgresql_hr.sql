@@ -185,7 +185,7 @@ CREATE TABLE hr.historico_cargos (
 /*comentarios da tabela historico_cargos*/
 
 COMMENT ON TABLE hr.historico_cargos IS 'A tabela historico_cargos guarda as informações de cargos de cada funcionario.';
-COMMENT ON COLUMN hr.historico_cargos.id_empregado IS 'Chave primária de tabela historico_cargos.';
+COMMENT ON COLUMN hr.historico_cargos.id_empregado IS 'Chave primária de tabela.';
 COMMENT ON COLUMN hr.historico_cargos.data_inicial IS 'Data inicial do funcionario no cargo atual.';
 COMMENT ON COLUMN hr.historico_cargos.data_final IS 'Data de finalização do funcionario no cargo.';
 COMMENT ON COLUMN hr.historico_cargos.id_cargo IS 'Chave primária de tabela historico_cargos.';
