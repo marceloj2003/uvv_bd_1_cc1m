@@ -152,7 +152,7 @@ COMMENT ON COLUMN hr.empregados.data_contratacao IS 'A Data que o funcionario in
 COMMENT ON COLUMN hr.empregados.id_cargo IS 'A chave estrangeira do funcionario.';
 COMMENT ON COLUMN hr.empregados.salario IS 'O salário mensal do funcionario.';
 COMMENT ON COLUMN hr.empregados.comissao IS 'A porcentagem de comissão do funcionario.';
-COMMENT ON COLUMN hr.empregados.id_supervisor IS 'Chave primária de tabela empregados.';
+COMMENT ON COLUMN hr.empregados.id_supervisor IS 'Chave primária de tabela.';
 COMMENT ON COLUMN hr.empregados.id_departamento IS 'O departamento atual de um funcionario.';
 
 
