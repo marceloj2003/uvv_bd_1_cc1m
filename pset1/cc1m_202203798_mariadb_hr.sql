@@ -1,19 +1,18 @@
-mysql -U root -p
-computacao@raiz
+-- Criando o usuário
+CREATE USER marcelo IDENTIFIED BY 'celin';
 
--- Criação do usuário
-CREATE USER marcelo IDENTIFIED BY '202203798';
-
+/* criando o banco de dados*/
 CREATE DATABASE uvv;
-GRANT ALL ON *.* TO marcelo;
-EXIT
+GRANT ALL ON uvv* TO marcelo;
 
+/*entrando com usuario e senha*/
 mysql -u marcelo -p
-202203798
+celin
 
+/*selecionando o banco de dados para utilizar para criar as tabelas*/
 USE uvv;
 
--- Tabelas e relações
+/* criando as tabelas e relações*/
 
 CREATE TABLE cargos (
                 id_cargo VARCHAR(10) NOT NULL,
@@ -23,16 +22,13 @@ CREATE TABLE cargos (
                 PRIMARY KEY (id_cargo)
 );
 
-ALTER TABLE cargos COMMENT 'Tabela cargos, que armazena os cargos existentes e a faixa salarial (mínimo
-e máximo) para cada cargo.';
+/*comentarios da tabela cargos*/
 
+ALTER TABLE cargos COMMENT 'A Tabela cargos ela armazena os cargos existentes e a faixa salarial para cada cargo.';
 ALTER TABLE cargos MODIFY COLUMN id_cargo VARCHAR(10) COMMENT 'Chave primária da tabela.';
-
 ALTER TABLE cargos MODIFY COLUMN cargo VARCHAR(35) COMMENT 'Nome do cargo.';
-
-ALTER TABLE cargos MODIFY COLUMN salario_minimo DECIMAL(8, 2) COMMENT 'O menor salário admitido para um cargo.';
-
-ALTER TABLE cargos MODIFY COLUMN salario_maximo DECIMAL(8, 2) COMMENT 'O maior salário admitido para um cargo.';
+ALTER TABLE cargos MODIFY COLUMN salario_minimo DECIMAL(8, 2) COMMENT 'O sálario minimo admitido para um cargo.';
+ALTER TABLE cargos MODIFY COLUMN salario_maximo DECIMAL(8, 2) COMMENT 'O sálario máximo admitido para um cargo.';
 
 
 CREATE UNIQUE INDEX cargos_idx
@@ -45,11 +41,11 @@ CREATE TABLE regioes (
                 PRIMARY KEY (id_regiao)
 );
 
-ALTER TABLE regioes COMMENT 'Tabela regiões. Contém os números e nomes das regiões.';
+/*comentarios da tabela regiões*/
 
-ALTER TABLE regioes MODIFY COLUMN id_regiao INTEGER COMMENT 'Chave primária da tabela regiões.';
-
-ALTER TABLE regioes MODIFY COLUMN nome VARCHAR(25) COMMENT 'Nomes das regiões.';
+ALTER TABLE regioes COMMENT 'Tabela regiões conta com os números e nomes das regiões.';
+ALTER TABLE regioes MODIFY COLUMN id_regiao INTEGER COMMENT 'Chave primária de tabela regiões.';
+ALTER TABLE regioes MODIFY COLUMN nome VARCHAR(25) COMMENT 'Nome das regiões.';
 
 
 CREATE UNIQUE INDEX regioes_idx
@@ -63,13 +59,12 @@ CREATE TABLE paises (
                 PRIMARY KEY (id_pais)
 );
 
-ALTER TABLE paises COMMENT 'Tabela com as informaçõs dos países.';
+/*comentarios da tabela países*/
 
-ALTER TABLE paises MODIFY COLUMN id_pais CHAR(2) COMMENT 'Chave primária da tabela países.';
-
+ALTER TABLE paises COMMENT 'Tabela países com as informaçõs de cada país.';
+ALTER TABLE paises MODIFY COLUMN id_pais CHAR(2) COMMENT 'Chave primária de tabela países.';
 ALTER TABLE paises MODIFY COLUMN nome VARCHAR(50) COMMENT 'Nome do país.';
-
-ALTER TABLE paises MODIFY COLUMN id_regiao INTEGER COMMENT 'Chave estrangeira para a tabela de regiões.';
+ALTER TABLE paises MODIFY COLUMN id_regiao INTEGER COMMENT 'Uma chave estrangeira na tabela de regiões.';
 
 
 CREATE UNIQUE INDEX paises_idx
@@ -86,20 +81,15 @@ CREATE TABLE localizacoes (
                 PRIMARY KEY (id_localizacao)
 );
 
-ALTER TABLE localizacoes COMMENT 'Contém os endereços de diversos escritórios e facilidades
-da empresa.';
+/*comentarios da tabela localizacões*/
 
-ALTER TABLE localizacoes MODIFY COLUMN id_localizacao INTEGER COMMENT 'Chave primária da tabela.';
-
-ALTER TABLE localizacoes MODIFY COLUMN endereco VARCHAR(50) COMMENT 'Endereço de um escritório ou facilidade da empresa.';
-
-ALTER TABLE localizacoes MODIFY COLUMN cep VARCHAR(12) COMMENT 'CEP - localizacao';
-
+ALTER TABLE localizacoes COMMENT 'A tabela localizacoes conta com os endereços de varios escritórios e facilidades da empresa.';
+ALTER TABLE localizacoes MODIFY COLUMN id_localizacao INTEGER COMMENT 'Chave primária de tabela localizações.';
+ALTER TABLE localizacoes MODIFY COLUMN endereco VARCHAR(50) COMMENT 'O Endereço do escritório ou facilidade da empresa.';
+ALTER TABLE localizacoes MODIFY COLUMN cep VARCHAR(12) COMMENT 'CEP da empresa';
 ALTER TABLE localizacoes MODIFY COLUMN cidade VARCHAR(50) COMMENT 'Cidade da empresa.';
-
 ALTER TABLE localizacoes MODIFY COLUMN uf VARCHAR(25) COMMENT 'Estado da empresa.';
-
-ALTER TABLE localizacoes MODIFY COLUMN id_pais CHAR(2) COMMENT 'Chave estrangeira para a tabela de países.';
+ALTER TABLE localizacoes MODIFY COLUMN id_pais CHAR(2) COMMENT 'A Chave estrangeira na tabela de países.';
 
 
 CREATE TABLE departamentos (
@@ -109,14 +99,12 @@ CREATE TABLE departamentos (
                 PRIMARY KEY (id_departamento)
 );
 
-ALTER TABLE departamentos COMMENT 'Tabela com as informações sobre os departamentos da empresa.';
+/*comentarios da tabela departamentos*/
 
-ALTER TABLE departamentos MODIFY COLUMN id_departamento INTEGER COMMENT 'Chave primária da tabela.';
-
-ALTER TABLE departamentos MODIFY COLUMN nome VARCHAR(50) COMMENT 'Nome do departamento da tabela.';
-
-ALTER TABLE departamentos MODIFY COLUMN id_localizacao INTEGER COMMENT 'qual empregado,
-se houver, é o gerente deste departamento.';
+ALTER TABLE departamentos COMMENT 'A Tabela departamentos informe sobre o departamentos da empresa.';
+ALTER TABLE departamentos MODIFY COLUMN id_departamento INTEGER COMMENT 'Chave primária de tabela departamentos.';
+ALTER TABLE departamentos MODIFY COLUMN nome VARCHAR(50) COMMENT 'Nome do departamento.';
+ALTER TABLE departamentos MODIFY COLUMN id_localizacao INTEGER COMMENT 'A chave estrangeira na tabela de departamentos.';
 
 
 CREATE UNIQUE INDEX departamentos_idx
@@ -137,29 +125,19 @@ CREATE TABLE empregados (
                 PRIMARY KEY (id_empregado)
 );
 
-ALTER TABLE empregados COMMENT 'Tabela que contém as informações dos empregados.';
+/*comentarios da tabela empregados*/
 
-ALTER TABLE empregados MODIFY COLUMN id_empregado INTEGER COMMENT 'Chave primária da tabela.';
-
-ALTER TABLE empregados MODIFY COLUMN nome VARCHAR(75) COMMENT 'Nome completo do empregado.';
-
-ALTER TABLE empregados MODIFY COLUMN email VARCHAR(35) COMMENT 'Parte inicial do email do empregado (antes do @).';
-
-ALTER TABLE empregados MODIFY COLUMN telefone VARCHAR(20) COMMENT 'ado).';
-
-ALTER TABLE empregados MODIFY COLUMN data_contratacao DATE COMMENT 'Data que o empregado iniciou no cargo atual.';
-
-ALTER TABLE empregados MODIFY COLUMN id_cargo VARCHAR(10) COMMENT 'do empregado.';
-
-ALTER TABLE empregados MODIFY COLUMN salario DECIMAL(8, 2) COMMENT 'Salário mensal atual do empregado.';
-
-ALTER TABLE empregados MODIFY COLUMN comissao DECIMAL(4, 2) COMMENT 'o departamento
-de vendas são elegíveis para comissões.';
-
+ALTER TABLE empregados COMMENT 'A tabela empregados que conta com as informações da tabela empregados.';
+ALTER TABLE empregados MODIFY COLUMN id_empregado INTEGER COMMENT 'Chave primária de tabela empregados.';
+ALTER TABLE empregados MODIFY COLUMN nome VARCHAR(75) COMMENT 'Nome completo do funcionario.';
+ALTER TABLE empregados MODIFY COLUMN email VARCHAR(35) COMMENT 'insere o email do funcionario.';
+ALTER TABLE empregados MODIFY COLUMN telefone VARCHAR(20) COMMENT 'telefone do funcionario.';
+ALTER TABLE empregados MODIFY COLUMN data_contratacao DATE COMMENT 'A Data que o funcionario iniciou no cargo.';
+ALTER TABLE empregados MODIFY COLUMN id_cargo VARCHAR(10) COMMENT 'A chave estrangeira do funcionario.';
+ALTER TABLE empregados MODIFY COLUMN salario DECIMAL(8, 2) COMMENT 'O salário mensal atual do empregado.';
+ALTER TABLE empregados MODIFY COLUMN comissao DECIMAL(4, 2) COMMENT 'A porcentagem de comissão do funcionario.';
 ALTER TABLE empregados MODIFY COLUMN id_supervisor INTEGER COMMENT 'Chave primária da tabela.';
-
-ALTER TABLE empregados MODIFY COLUMN id_departamento INTEGER COMMENT 'epartamento atual
-de um empregado.';
+ALTER TABLE empregados MODIFY COLUMN id_departamento INTEGER COMMENT 'O departamento atual de um funcionario.';
 
 
 CREATE UNIQUE INDEX empregados_idx
@@ -172,9 +150,10 @@ CREATE TABLE gerentes (
                 PRIMARY KEY (id_gerente, id_departamento)
 );
 
-ALTER TABLE gerentes MODIFY COLUMN id_gerente INTEGER COMMENT 'Chave primária da tabela.';
+/*comentarios da tabela gerentes*/
 
-ALTER TABLE gerentes MODIFY COLUMN id_departamento INTEGER COMMENT 'Chave primária da tabela.';
+ALTER TABLE gerentes MODIFY COLUMN id_gerente INTEGER COMMENT 'Chave primária de tabela gerentes.';
+ALTER TABLE gerentes MODIFY COLUMN id_departamento INTEGER COMMENT 'Chave primária de tabela gerentes.';
 
 
 CREATE TABLE historico_cargos (
@@ -186,12 +165,15 @@ CREATE TABLE historico_cargos (
                 PRIMARY KEY (id_empregado, data_inicial)
 );
 
-ALTER TABLE historico_cargos MODIFY COLUMN id_empregado INTEGER COMMENT 'Chave primária da tabela.';
+/*comentarios da tabela historico_cargos*/
 
-ALTER TABLE historico_cargos MODIFY COLUMN id_cargo VARCHAR(10) COMMENT 'Chave primária da tabela.';
+ALTER TABLE historico_cargos MODIFY COLUMN id_empregado INTEGER COMMENT 'Chave primária de tabela historico_cargos.';
+ALTER TABLE historico_cargos MODIFY COLUMN data_inicial DATE COMMENT 'Data inicial do funcionario no cargo atual.';
+ALTER TABLE historico_cargos MODIFY COLUMN data_inicial DATE COMMENT 'Data de finalização do funcionario no cargo.';
+ALTER TABLE historico_cargos MODIFY COLUMN id_cargo VARCHAR(10) COMMENT 'Chave primária de tabela historico_cargos.';
+ALTER TABLE historico_cargos MODIFY COLUMN id_departamento INTEGER COMMENT 'Chave primária de tabela historico_cargos.';
 
-ALTER TABLE historico_cargos MODIFY COLUMN id_departamento INTEGER COMMENT 'Chave primária da tabela.';
-
+/*Os atributos de chave estrangeira e se relacionando com as tabelas*/
 
 ALTER TABLE empregados ADD CONSTRAINT cargos_empregados_fk
 FOREIGN KEY (id_cargo)
@@ -259,6 +241,7 @@ REFERENCES empregados (id_empregado)
 ON DELETE NO ACTION
 ON UPDATE NO ACTION;
 
+/*dados em regiões*/
 INSERT INTO regioes (id_regiao, nome) VALUES
 (1,'Europe');
 INSERT INTO regioes (id_regiao, nome) VALUES
@@ -268,6 +251,7 @@ INSERT INTO regioes (id_regiao, nome) VALUES
 INSERT INTO regioes (id_regiao, nome) VALUES
 (4,'Middle East and Africa');
 
+/*dados em países*/
 INSERT INTO paises (id_pais, nome, id_regiao) VALUES
 ('AR','Argentina',2);
 INSERT INTO paises (id_pais, nome, id_regiao) VALUES
@@ -319,6 +303,7 @@ INSERT INTO paises (id_pais, nome, id_regiao) VALUES
 INSERT INTO paises (id_pais, nome, id_regiao) VALUES
 ('ZW','Zimbabwe',4);
 
+/*dados em localizações*/
 INSERT INTO localizacoes (id_localizacao, endereco, cep, cidade, uf, id_pais) VALUES
 (1000,'1297 Via Cola di Rie','00989','Roma','','IT');
 INSERT INTO localizacoes (id_localizacao, endereco, cep, cidade, uf, id_pais) VALUES
@@ -366,6 +351,7 @@ INSERT INTO localizacoes (id_localizacao, endereco, cep, cidade, uf, id_pais) VA
 INSERT INTO localizacoes (id_localizacao, endereco, cep, cidade, uf, id_pais) VALUES
 (3200,'Mariano Escobedo 9991','11932','Mexico City','Distrito Federal,','MX');
 
+/*dados em departamentos*/
 INSERT INTO departamentos (id_departamento, nome, id_localizacao) VALUES
 (10,'Administration', 1700);
 INSERT INTO departamentos (id_departamento, nome, id_localizacao) VALUES
@@ -421,6 +407,7 @@ INSERT INTO departamentos (id_departamento, nome, id_localizacao) VALUES
 INSERT INTO departamentos (id_departamento, nome, id_localizacao) VALUES
 (270,'Payroll', 1700);
 
+/*dados em cargos*/
 INSERT INTO cargos(id_cargo, cargo, salario_minimo, salario_maximo) VALUES
 ('AD_PRES', 'President', '20080', '40000');
 INSERT INTO cargos(id_cargo, cargo, salario_minimo, salario_maximo) VALUES
@@ -460,6 +447,7 @@ INSERT INTO cargos(id_cargo, cargo, salario_minimo, salario_maximo) VALUES
 INSERT INTO cargos(id_cargo, cargo, salario_minimo, salario_maximo) VALUES
 ('PR_REP', 'Public Relations Representative', '4500', '10500');
 
+/*dados em empregados*/
 INSERT INTO empregados (id_empregado, nome, email,
 telefone, data_contratacao, id_cargo, salario,
 comissao, id_supervisor, id_departamento) VALUES
@@ -889,6 +877,7 @@ telefone, data_contratacao, id_cargo, salario,
 comissao, id_supervisor, id_departamento) VALUES
 (206, 'William Gietz', 'WGIETZ', '515.123.8181', '2002-06-07', 'AC_ACCOUNT', 8300, null, 205, 110);
 
+/*dados em gerentes*/
 INSERT INTO gerentes (id_departamento, id_gerente) VALUES
 (90, 100);
 INSERT INTO gerentes (id_departamento, id_gerente) VALUES
@@ -912,6 +901,7 @@ INSERT INTO gerentes (id_departamento, id_gerente) VALUES
 INSERT INTO gerentes (id_departamento, id_gerente) VALUES
 (110, 205);
 
+/*dados em historico_cargos*/
 INSERT INTO historico_cargos (id_empregado, data_inicial, data_final, id_cargo, id_departamento) VALUES
 (102,'2001-01-13','1906-07-24','IT_PROG',60);
 INSERT INTO historico_cargos (id_empregado, data_inicial, data_final, id_cargo, id_departamento) VALUES
