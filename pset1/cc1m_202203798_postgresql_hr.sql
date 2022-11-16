@@ -28,7 +28,7 @@ ALTER USER marcelo SET SEARCH_PATH TO hr, "$user", public;
 SELECT current_schema();
 
 
-/* Tabelas e relações */
+/* Aplicando as tabelas e relações */
 CREATE TABLE hr.cargos (
                 id_cargo VARCHAR(10) NOT NULL,
                 cargo VARCHAR(35) NOT NULL,
@@ -36,6 +36,9 @@ CREATE TABLE hr.cargos (
                 salario_maximo NUMERIC(8,2),
                 CONSTRAINT id_cargo PRIMARY KEY (id_cargo)
 );
+
+/*comentarios da tabela cargos*/
+
 COMMENT ON TABLE hr.cargos IS 'A Tabela cargos ela armazena os cargos existentes e a faixa salarial para cada cargo.';
 COMMENT ON COLUMN hr.cargos.id_cargo IS 'Chave primária de tabela cargos.';
 COMMENT ON COLUMN hr.cargos.cargo IS 'Nome do cargo.';
@@ -52,6 +55,9 @@ CREATE TABLE hr.regioes (
                 nome VARCHAR(25) NOT NULL,
                 CONSTRAINT id_regiao PRIMARY KEY (id_regiao)
 );
+
+/*comentarios da tabela regiões*/
+
 COMMENT ON TABLE hr.regioes IS 'Tabela regiões conta com os números e nomes das regiões.';
 COMMENT ON COLUMN hr.regioes.id_regiao IS 'Chave primária de tabelas regiões.';
 COMMENT ON COLUMN hr.regioes.nome IS 'Nome das regiões.';
@@ -67,6 +73,9 @@ CREATE TABLE hr.paises (
                 id_regiao INTEGER NOT NULL,
                 CONSTRAINT id_pais PRIMARY KEY (id_pais)
 );
+
+/*comentarios da tabela países*/
+
 COMMENT ON TABLE hr.paises IS 'Tabela países com as informaçõs de cada país.';
 COMMENT ON COLUMN hr.paises.id_pais IS 'Chave primária de tabela países.';
 COMMENT ON COLUMN hr.paises.nome IS 'Nome do país.';
@@ -86,6 +95,9 @@ CREATE TABLE hr.localizacoes (
                 id_pais CHAR(2) NOT NULL,
                 CONSTRAINT id_localizacao PRIMARY KEY (id_localizacao)
 );
+
+/*comentarios da tabela localizacões*/
+
 COMMENT ON TABLE hr.localizacoes IS 'A tabela localizacoes conta com os endereços de varios escritórios e facilidades
 da empresa.';
 COMMENT ON COLUMN hr.localizacoes.id_localizacao IS 'Chave primária de tabela localizacoes.';
@@ -102,6 +114,9 @@ CREATE TABLE hr.departamentos (
                 id_localizacao INTEGER NOT NULL,
                 CONSTRAINT id_departamento PRIMARY KEY (id_departamento)
 );
+
+/*comentarios da tabela departamentos*/
+
 COMMENT ON TABLE hr.departamentos IS 'A Tabela departamentos informe sobre o departamentos da empresa.';
 COMMENT ON COLUMN hr.departamentos.id_departamento IS 'Chave primária de tabela departamentos.';
 COMMENT ON COLUMN hr.departamentos.nome IS 'Nome do departamento.';
@@ -125,6 +140,9 @@ CREATE TABLE hr.empregados (
                 id_departamento INTEGER,
                 CONSTRAINT id_empregado PRIMARY KEY (id_empregado)
 );
+
+/*comentarios da tabela empregados*/
+
 COMMENT ON TABLE hr.empregados IS 'A tabela empregados que conta com as informações da tabela empregados.';
 COMMENT ON COLUMN hr.empregados.id_empregado IS 'Chave primária de tabela empregados.';
 COMMENT ON COLUMN hr.empregados.nome IS 'Nome completo do funcionario.';
@@ -147,6 +165,9 @@ CREATE TABLE hr.gerentes (
                 id_departamento INTEGER NOT NULL,
                 CONSTRAINT gerentes_pk PRIMARY KEY (id_gerente, id_departamento)
 );
+
+/*comentarios da tabela gerentes*/
+
 COMMENT ON TABLE hr.gerentes IS 'Tabela gerentes conta a chaves primárias e informações referindo gerentes.';
 COMMENT ON COLUMN hr.gerentes.id_gerente IS 'Chave primária de tabela gerentes.';
 COMMENT ON COLUMN hr.gerentes.id_departamento IS 'Chave primária de tabela gerentes.';
@@ -160,6 +181,9 @@ CREATE TABLE hr.historico_cargos (
                 id_departamento INTEGER NOT NULL,
                 CONSTRAINT data_inicial PRIMARY KEY (id_empregado, data_inicial)
 );
+
+/*comentarios da tabela historico_cargos*/
+
 COMMENT ON TABLE hr.historico_cargos IS 'A tabela historico_cargos guarda as informações de cargos de cada funcionario.';
 COMMENT ON COLUMN hr.historico_cargos.id_empregado IS 'Chave primária da tabela.';
 COMMENT ON COLUMN hr.historico_cargos.data_inicial IS 'Data inicial do funcionario no cargo atual.';
@@ -167,6 +191,7 @@ COMMENT ON COLUMN hr.historico_cargos.data_final IS 'Data de finalização do fu
 COMMENT ON COLUMN hr.historico_cargos.id_cargo IS 'Chave primária da tabela.';
 COMMENT ON COLUMN hr.historico_cargos.id_departamento IS 'Chave primária da tabela.';
 
+/*Os atributos de chave estrangeira e se relacionando com as tabelas*/
 
 ALTER TABLE hr.empregados ADD CONSTRAINT cargos_empregados_fk
 FOREIGN KEY (id_cargo)
@@ -245,6 +270,7 @@ ON DELETE NO ACTION
 ON UPDATE NO ACTION
 NOT DEFERRABLE;
 
+/*dados em regiões*/
 INSERT INTO regioes (id_regiao, nome) VALUES
 (1,'Europe');
 INSERT INTO regioes (id_regiao, nome) VALUES
@@ -254,6 +280,7 @@ INSERT INTO regioes (id_regiao, nome) VALUES
 INSERT INTO regioes (id_regiao, nome) VALUES
 (4,'Middle East and Africa');
 
+/*dados em países*/
 INSERT INTO paises (id_pais, nome, id_regiao) VALUES
 ('AR','Argentina',2);
 INSERT INTO paises (id_pais, nome, id_regiao) VALUES
@@ -305,6 +332,7 @@ INSERT INTO paises (id_pais, nome, id_regiao) VALUES
 INSERT INTO paises (id_pais, nome, id_regiao) VALUES
 ('ZW','Zimbabwe',4);
 
+/*dados em localizações*/
 INSERT INTO localizacoes (id_localizacao, endereco, cep, cidade, uf, id_pais) VALUES
 (1000,'1297 Via Cola di Rie','00989','Roma','','IT');
 INSERT INTO localizacoes (id_localizacao, endereco, cep, cidade, uf, id_pais) VALUES
@@ -352,6 +380,7 @@ INSERT INTO localizacoes (id_localizacao, endereco, cep, cidade, uf, id_pais) VA
 INSERT INTO localizacoes (id_localizacao, endereco, cep, cidade, uf, id_pais) VALUES
 (3200,'Mariano Escobedo 9991','11932','Mexico City','Distrito Federal,','MX');
 
+/*dados em departamentos*/
 INSERT INTO departamentos (id_departamento, nome, id_localizacao) VALUES
 (10,'Administration', 1700);
 INSERT INTO departamentos (id_departamento, nome, id_localizacao) VALUES
@@ -407,6 +436,7 @@ INSERT INTO departamentos (id_departamento, nome, id_localizacao) VALUES
 INSERT INTO departamentos (id_departamento, nome, id_localizacao) VALUES
 (270,'Payroll', 1700);
 
+/*dados em cargos*/
 INSERT INTO cargos(id_cargo, cargo, salario_minimo, salario_maximo) VALUES
 ('AD_PRES', 'President', '20080', '40000');
 INSERT INTO cargos(id_cargo, cargo, salario_minimo, salario_maximo) VALUES
@@ -446,6 +476,7 @@ INSERT INTO cargos(id_cargo, cargo, salario_minimo, salario_maximo) VALUES
 INSERT INTO cargos(id_cargo, cargo, salario_minimo, salario_maximo) VALUES
 ('PR_REP', 'Public Relations Representative', '4500', '10500');
 
+/*dados em empregados*/
 INSERT INTO empregados (id_empregado, nome, email,
 telefone, data_contratacao, id_cargo, salario,
 comissao, id_supervisor, id_departamento) VALUES
@@ -875,6 +906,7 @@ telefone, data_contratacao, id_cargo, salario,
 comissao, id_supervisor, id_departamento) VALUES
 (206, 'William Gietz', 'WGIETZ', '515.123.8181', '2002-06-07', 'AC_ACCOUNT', 8300, null, 205, 110);
 
+/*dados em gerentes*/
 INSERT INTO gerentes (id_departamento, id_gerente) VALUES
 (90, 100);
 INSERT INTO gerentes (id_departamento, id_gerente) VALUES
@@ -898,6 +930,7 @@ INSERT INTO gerentes (id_departamento, id_gerente) VALUES
 INSERT INTO gerentes (id_departamento, id_gerente) VALUES
 (110, 205);
 
+/*dados em historico_cargos*/
 INSERT INTO historico_cargos (id_empregado, data_inicial, data_final, id_cargo, id_departamento) VALUES
 (102,'13-JAN-01','24-JUL-06', 'IT_PROG', 60);
 INSERT INTO historico_cargos (id_empregado, data_inicial, data_final, id_cargo, id_departamento) VALUES
