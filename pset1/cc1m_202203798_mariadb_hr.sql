@@ -1,4 +1,4 @@
--- Criando o usuário
+/*Criando o usuário*/
 CREATE USER marcelo IDENTIFIED BY 'celin';
 
 /* criando o banco de dados*/
