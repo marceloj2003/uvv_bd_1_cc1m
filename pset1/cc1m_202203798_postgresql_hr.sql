@@ -28,8 +28,7 @@ ALTER USER marcelo SET SEARCH_PATH TO hr, "$user", public;
 SELECT current_schema();
 
 
-/* Aplicando as tabelas e relações */
-
+/* criando tabela cargos */
 CREATE TABLE hr.cargos (
                 id_cargo VARCHAR(10) NOT NULL,
                 cargo VARCHAR(35) NOT NULL,
@@ -37,6 +36,8 @@ CREATE TABLE hr.cargos (
                 salario_maximo NUMERIC(8,2),
                 CONSTRAINT id_cargo PRIMARY KEY (id_cargo)
 );
+
+/*comentarios da tabela cargos*/
 COMMENT ON TABLE hr.cargos IS 'A Tabela cargos ela armazena os cargos existentes e a faixa salarial para cada cargo.';
 COMMENT ON COLUMN hr.cargos.id_cargo IS 'Chave primária de tabela cargos.';
 COMMENT ON COLUMN hr.cargos.cargo IS 'Nome do cargo.';
@@ -47,12 +48,15 @@ COMMENT ON COLUMN hr.cargos.salario_maximo IS 'O sálario maximo admitido para u
 CREATE UNIQUE INDEX cargos_idx
  ON hr.cargos
  ( cargo );
-
+ 
+/*criando tabela regioes*/
 CREATE TABLE hr.regioes (
                 id_regiao INTEGER NOT NULL,
                 nome VARCHAR(25) NOT NULL,
                 CONSTRAINT id_regiao PRIMARY KEY (id_regiao)
 );
+
+/*comentarios da tabela regioes*/
 COMMENT ON TABLE hr.regioes IS 'Tabela regiões conta com os números e nomes das regiões.';
 COMMENT ON COLUMN hr.regioes.id_regiao IS 'Chave primária de tabela regiões.';
 COMMENT ON COLUMN hr.regioes.nome IS 'Nome das regiões.';
@@ -61,13 +65,16 @@ COMMENT ON COLUMN hr.regioes.nome IS 'Nome das regiões.';
 CREATE UNIQUE INDEX regioes_idx
  ON hr.regioes
  ( nome );
-
+ 
+/*criando tabela paises*/
 CREATE TABLE hr.paises (
                 id_pais CHAR(2) NOT NULL,
                 nome VARCHAR(50) NOT NULL,
                 id_regiao INTEGER NOT NULL,
                 CONSTRAINT id_pais PRIMARY KEY (id_pais)
 );
+
+/*comentarios da tabela paises*/
 COMMENT ON TABLE hr.paises IS 'Tabela países com as informaçõs de cada país.';
 COMMENT ON COLUMN hr.paises.id_pais IS 'Chave primária de tabela países.';
 COMMENT ON COLUMN hr.paises.nome IS 'Nome do país.';
@@ -78,6 +85,7 @@ CREATE UNIQUE INDEX paises_idx
  ON hr.paises
  ( nome );
 
+/*criando tabela localizacoes*/
 CREATE TABLE hr.localizacoes (
                 id_localizacao INTEGER NOT NULL,
                 endereco VARCHAR(50),
@@ -87,8 +95,9 @@ CREATE TABLE hr.localizacoes (
                 id_pais CHAR(2) NOT NULL,
                 CONSTRAINT id_localizacao PRIMARY KEY (id_localizacao)
 );
-COMMENT ON TABLE hr.localizacoes IS 'A tabela localizacoes conta com os endereços de varios escritórios e facilidades
-da empresa.';
+
+/*comentarios da tabela localizacoes*/
+COMMENT ON TABLE hr.localizacoes IS 'A tabela localizacoes conta com os endereços de varios escritórios e facilidades da empresa.';
 COMMENT ON COLUMN hr.localizacoes.id_localizacao IS 'Chave primária de tabela localizacoes.';
 COMMENT ON COLUMN hr.localizacoes.endereco IS 'O Endereço do escritório ou facilidade da empresa.';
 COMMENT ON COLUMN hr.localizacoes.cep IS 'CEP da empresa';
@@ -96,13 +105,15 @@ COMMENT ON COLUMN hr.localizacoes.cidade IS 'Cidade da empresa.';
 COMMENT ON COLUMN hr.localizacoes.uf IS 'Estado da empresa.';
 COMMENT ON COLUMN hr.localizacoes.id_pais IS 'A chave estrangeira na tabela de países.';
 
-
+/*criando tabela departamentos*/
 CREATE TABLE hr.departamentos (
                 id_departamento INTEGER NOT NULL,
                 nome VARCHAR(50),
                 id_localizacao INTEGER NOT NULL,
                 CONSTRAINT id_departamento PRIMARY KEY (id_departamento)
 );
+
+/*comentarios da tabela departamentos*/
 COMMENT ON TABLE hr.departamentos IS 'A Tabela departamentos informe sobre o departamentos da empresa.';
 COMMENT ON COLUMN hr.departamentos.id_departamento IS 'Chave primária de tabela departamentos.';
 COMMENT ON COLUMN hr.departamentos.nome IS 'Nome do departamento da tabela.';
@@ -113,6 +124,7 @@ CREATE UNIQUE INDEX departamentos_idx
  ON hr.departamentos
  ( nome );
 
+/*criando tabela empregados*/
 CREATE TABLE hr.empregados (
                 id_empregado INTEGER NOT NULL,
                 nome VARCHAR(75) NOT NULL,
@@ -126,6 +138,8 @@ CREATE TABLE hr.empregados (
                 id_departamento INTEGER,
                 CONSTRAINT id_empregado PRIMARY KEY (id_empregado)
 );
+
+/*comentarios da tabela empregados*/
 COMMENT ON TABLE hr.empregados IS 'A tabela empregados que conta com as informações da tabela empregados.';
 COMMENT ON COLUMN hr.empregados.id_empregado IS 'Chave primária de tabela empregados.';
 COMMENT ON COLUMN hr.empregados.nome IS 'Nome completo do funcionario.';
@@ -143,16 +157,19 @@ CREATE UNIQUE INDEX empregados_idx
  ON hr.empregados
  ( email );
 
+/*criando tabela gerentes*/
 CREATE TABLE hr.gerentes (
                 id_gerente INTEGER NOT NULL,
                 id_departamento INTEGER NOT NULL,
                 CONSTRAINT gerentes_pk PRIMARY KEY (id_gerente, id_departamento)
 );
+
+/*comentarios da tabela gerentes*/
 COMMENT ON TABLE hr.gerentes IS 'Tabela gerentes conta a chaves primárias e informações referindo gerentes.';
 COMMENT ON COLUMN hr.gerentes.id_gerente IS 'Chave primária de tabela gerentes.';
 COMMENT ON COLUMN hr.gerentes.id_departamento IS 'Chave primária de tabela gerentes.';
 
-
+/*criando tabela historico_cargos*/
 CREATE TABLE hr.historico_cargos (
                 id_empregado INTEGER NOT NULL,
                 data_inicial DATE NOT NULL,
@@ -161,6 +178,8 @@ CREATE TABLE hr.historico_cargos (
                 id_departamento INTEGER NOT NULL,
                 CONSTRAINT data_inicial PRIMARY KEY (id_empregado, data_inicial)
 );
+
+/*comentarios da tabela historico_cargos*/
 COMMENT ON TABLE hr.historico_cargos IS 'A tabela historico_cargos guarda as informações de cargos de cada funcionario.';
 COMMENT ON COLUMN hr.historico_cargos.id_empregado IS 'Chave primária de tabela.';
 COMMENT ON COLUMN hr.historico_cargos.data_inicial IS 'Data inicial do funcionario no cargo atual.';
