@@ -29,6 +29,7 @@ SELECT current_schema();
 
 
 /* Aplicando as tabelas e relações */
+
 CREATE TABLE hr.cargos (
                 id_cargo VARCHAR(10) NOT NULL,
                 cargo VARCHAR(35) NOT NULL,
@@ -36,14 +37,11 @@ CREATE TABLE hr.cargos (
                 salario_maximo NUMERIC(8,2),
                 CONSTRAINT id_cargo PRIMARY KEY (id_cargo)
 );
-
-/*comentarios da tabela cargos*/
-
 COMMENT ON TABLE hr.cargos IS 'A Tabela cargos ela armazena os cargos existentes e a faixa salarial para cada cargo.';
 COMMENT ON COLUMN hr.cargos.id_cargo IS 'Chave primária de tabela cargos.';
 COMMENT ON COLUMN hr.cargos.cargo IS 'Nome do cargo.';
-COMMENT ON COLUMN hr.cargos.salario_minimo IS 'O salário minimo admitido para um cargo.';
-COMMENT ON COLUMN hr.cargos.salario_maximo IS 'O salário máximo admitido para um cargo.';
+COMMENT ON COLUMN hr.cargos.salario_minimo IS 'O sálario minimo admitido para um cargo.';
+COMMENT ON COLUMN hr.cargos.salario_maximo IS 'O sálario maximo admitido para um cargo.';
 
 
 CREATE UNIQUE INDEX cargos_idx
@@ -55,11 +53,8 @@ CREATE TABLE hr.regioes (
                 nome VARCHAR(25) NOT NULL,
                 CONSTRAINT id_regiao PRIMARY KEY (id_regiao)
 );
-
-/*comentarios da tabela regiões*/
-
 COMMENT ON TABLE hr.regioes IS 'Tabela regiões conta com os números e nomes das regiões.';
-COMMENT ON COLUMN hr.regioes.id_regiao IS 'Chave primária de tabelas regiões.';
+COMMENT ON COLUMN hr.regioes.id_regiao IS 'Chave primária de tabela regiões.';
 COMMENT ON COLUMN hr.regioes.nome IS 'Nome das regiões.';
 
 
@@ -73,9 +68,6 @@ CREATE TABLE hr.paises (
                 id_regiao INTEGER NOT NULL,
                 CONSTRAINT id_pais PRIMARY KEY (id_pais)
 );
-
-/*comentarios da tabela países*/
-
 COMMENT ON TABLE hr.paises IS 'Tabela países com as informaçõs de cada país.';
 COMMENT ON COLUMN hr.paises.id_pais IS 'Chave primária de tabela países.';
 COMMENT ON COLUMN hr.paises.nome IS 'Nome do país.';
@@ -95,9 +87,6 @@ CREATE TABLE hr.localizacoes (
                 id_pais CHAR(2) NOT NULL,
                 CONSTRAINT id_localizacao PRIMARY KEY (id_localizacao)
 );
-
-/*comentarios da tabela localizacões*/
-
 COMMENT ON TABLE hr.localizacoes IS 'A tabela localizacoes conta com os endereços de varios escritórios e facilidades
 da empresa.';
 COMMENT ON COLUMN hr.localizacoes.id_localizacao IS 'Chave primária de tabela localizacoes.';
@@ -114,12 +103,9 @@ CREATE TABLE hr.departamentos (
                 id_localizacao INTEGER NOT NULL,
                 CONSTRAINT id_departamento PRIMARY KEY (id_departamento)
 );
-
-/*comentarios da tabela departamentos*/
-
 COMMENT ON TABLE hr.departamentos IS 'A Tabela departamentos informe sobre o departamentos da empresa.';
 COMMENT ON COLUMN hr.departamentos.id_departamento IS 'Chave primária de tabela departamentos.';
-COMMENT ON COLUMN hr.departamentos.nome IS 'Nome do departamento.';
+COMMENT ON COLUMN hr.departamentos.nome IS 'Nome do departamento da tabela.';
 COMMENT ON COLUMN hr.departamentos.id_localizacao IS 'A chave estrangeira na tabela de departamentos.';
 
 
@@ -140,20 +126,17 @@ CREATE TABLE hr.empregados (
                 id_departamento INTEGER,
                 CONSTRAINT id_empregado PRIMARY KEY (id_empregado)
 );
-
-/*comentarios da tabela empregados*/
-
 COMMENT ON TABLE hr.empregados IS 'A tabela empregados que conta com as informações da tabela empregados.';
 COMMENT ON COLUMN hr.empregados.id_empregado IS 'Chave primária de tabela empregados.';
 COMMENT ON COLUMN hr.empregados.nome IS 'Nome completo do funcionario.';
 COMMENT ON COLUMN hr.empregados.email IS 'insere o email do funcionario.';
-COMMENT ON COLUMN hr.empregados.telefone IS 'telefone do funcionario.';
+COMMENT ON COLUMN hr.empregados.telefone IS 'telefone do funcionario';
 COMMENT ON COLUMN hr.empregados.data_contratacao IS 'A Data que o funcionario iniciou no cargo.';
 COMMENT ON COLUMN hr.empregados.id_cargo IS 'A chave estrangeira do funcionario.';
-COMMENT ON COLUMN hr.empregados.salario IS 'O salário mensal do funcionario.';
+COMMENT ON COLUMN hr.empregados.salario IS 'O salário mensal atual do empregado.';
 COMMENT ON COLUMN hr.empregados.comissao IS 'A porcentagem de comissão do funcionario.';
 COMMENT ON COLUMN hr.empregados.id_supervisor IS 'Chave primária de tabela.';
-COMMENT ON COLUMN hr.empregados.id_departamento IS 'O departamento atual de um funcionario.';
+COMMENT ON COLUMN hr.empregados.id_departamento IS 'O departamento atual do funcionario';
 
 
 CREATE UNIQUE INDEX empregados_idx
@@ -165,9 +148,6 @@ CREATE TABLE hr.gerentes (
                 id_departamento INTEGER NOT NULL,
                 CONSTRAINT gerentes_pk PRIMARY KEY (id_gerente, id_departamento)
 );
-
-/*comentarios da tabela gerentes*/
-
 COMMENT ON TABLE hr.gerentes IS 'Tabela gerentes conta a chaves primárias e informações referindo gerentes.';
 COMMENT ON COLUMN hr.gerentes.id_gerente IS 'Chave primária de tabela gerentes.';
 COMMENT ON COLUMN hr.gerentes.id_departamento IS 'Chave primária de tabela gerentes.';
@@ -181,9 +161,6 @@ CREATE TABLE hr.historico_cargos (
                 id_departamento INTEGER NOT NULL,
                 CONSTRAINT data_inicial PRIMARY KEY (id_empregado, data_inicial)
 );
-
-/*comentarios da tabela historico_cargos*/
-
 COMMENT ON TABLE hr.historico_cargos IS 'A tabela historico_cargos guarda as informações de cargos de cada funcionario.';
 COMMENT ON COLUMN hr.historico_cargos.id_empregado IS 'Chave primária de tabela.';
 COMMENT ON COLUMN hr.historico_cargos.data_inicial IS 'Data inicial do funcionario no cargo atual.';
@@ -191,81 +168,80 @@ COMMENT ON COLUMN hr.historico_cargos.data_final IS 'Data de finalização do fu
 COMMENT ON COLUMN hr.historico_cargos.id_cargo IS 'Chave primária de tabela.';
 COMMENT ON COLUMN hr.historico_cargos.id_departamento IS 'Chave primária de tabela.';
 
-/*Os atributos de chave estrangeira e se relacionando com as tabelas*/
 
 ALTER TABLE hr.empregados ADD CONSTRAINT cargos_empregados_fk
 FOREIGN KEY (id_cargo)
-REFERENCES cargos (id_cargo)
+REFERENCES hr.cargos (id_cargo)
 ON DELETE NO ACTION
 ON UPDATE NO ACTION
 NOT DEFERRABLE;
 
 ALTER TABLE hr.historico_cargos ADD CONSTRAINT cargos_historico_cargos_fk
 FOREIGN KEY (id_cargo)
-REFERENCES cargos (id_cargo)
+REFERENCES hr.cargos (id_cargo)
 ON DELETE NO ACTION
 ON UPDATE NO ACTION
 NOT DEFERRABLE;
 
 ALTER TABLE hr.paises ADD CONSTRAINT regioes_paises_fk
 FOREIGN KEY (id_regiao)
-REFERENCES regioes (id_regiao)
+REFERENCES hr.regioes (id_regiao)
 ON DELETE NO ACTION
 ON UPDATE NO ACTION
 NOT DEFERRABLE;
 
 ALTER TABLE hr.localizacoes ADD CONSTRAINT paises_localizacoes_fk
 FOREIGN KEY (id_pais)
-REFERENCES paises (id_pais)
+REFERENCES hr.paises (id_pais)
 ON DELETE NO ACTION
 ON UPDATE NO ACTION
 NOT DEFERRABLE;
 
 ALTER TABLE hr.departamentos ADD CONSTRAINT localizacoes_departamentos_fk
 FOREIGN KEY (id_localizacao)
-REFERENCES localizacoes (id_localizacao)
+REFERENCES hr.localizacoes (id_localizacao)
 ON DELETE NO ACTION
 ON UPDATE NO ACTION
 NOT DEFERRABLE;
 
 ALTER TABLE hr.empregados ADD CONSTRAINT departamentos_empregados_fk
 FOREIGN KEY (id_departamento)
-REFERENCES departamentos (id_departamento)
+REFERENCES hr.departamentos (id_departamento)
 ON DELETE NO ACTION
 ON UPDATE NO ACTION
 NOT DEFERRABLE;
 
 ALTER TABLE hr.historico_cargos ADD CONSTRAINT departamentos_historico_cargos_fk
 FOREIGN KEY (id_departamento)
-REFERENCES departamentos (id_departamento)
+REFERENCES hr.departamentos (id_departamento)
 ON DELETE NO ACTION
 ON UPDATE NO ACTION
 NOT DEFERRABLE;
 
 ALTER TABLE hr.gerentes ADD CONSTRAINT departamentos_gerentes_fk
 FOREIGN KEY (id_departamento)
-REFERENCES departamentos (id_departamento)
+REFERENCES hr.departamentos (id_departamento)
 ON DELETE NO ACTION
 ON UPDATE NO ACTION
 NOT DEFERRABLE;
 
 ALTER TABLE hr.historico_cargos ADD CONSTRAINT empregados_historico_cargos_fk
 FOREIGN KEY (id_empregado)
-REFERENCES empregados (id_empregado)
+REFERENCES hr.empregados (id_empregado)
 ON DELETE NO ACTION
 ON UPDATE NO ACTION
 NOT DEFERRABLE;
 
 ALTER TABLE hr.empregados ADD CONSTRAINT empregados_empregados_fk
 FOREIGN KEY (id_supervisor)
-REFERENCES empregados (id_empregado)
+REFERENCES hr.empregados (id_empregado)
 ON DELETE NO ACTION
 ON UPDATE NO ACTION
 NOT DEFERRABLE;
 
 ALTER TABLE hr.gerentes ADD CONSTRAINT empregados_gerentes_fk
 FOREIGN KEY (id_gerente)
-REFERENCES empregados (id_empregado)
+REFERENCES hr.empregados (id_empregado)
 ON DELETE NO ACTION
 ON UPDATE NO ACTION
 NOT DEFERRABLE;
