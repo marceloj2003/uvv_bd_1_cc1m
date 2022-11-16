@@ -105,7 +105,7 @@ COMMENT ON COLUMN hr.localizacoes.endereco IS 'O Endereço do escritório ou fac
 COMMENT ON COLUMN hr.localizacoes.cep IS 'CEP da empresa';
 COMMENT ON COLUMN hr.localizacoes.cidade IS 'Cidade da empresa.';
 COMMENT ON COLUMN hr.localizacoes.uf IS 'Estado da empresa.';
-COMMENT ON COLUMN hr.localizacoes.id_pais IS 'A Chave estrangeira na tabela de países.';
+COMMENT ON COLUMN hr.localizacoes.id_pais IS 'A chave estrangeira na tabela de países.';
 
 
 CREATE TABLE hr.departamentos (
